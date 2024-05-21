@@ -8,7 +8,7 @@ code at the start of the session:
 
 ```{r}
 install.packages('usethis') # Install `usethis` if you don't already have it.
-usethis::use_course('nzilbb/getting_started')
+usethis::use_course('nzilbb/getting_started_sessions')
 ```
 
 This should download all the relevant data files and the code which generates

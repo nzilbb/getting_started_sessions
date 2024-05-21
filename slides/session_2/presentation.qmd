@@ -30,7 +30,7 @@ library(here)
 
 ---
 
-::: {.big .centre}
+::: {.centre}
 
 ```{r}
 #| eval: false
@@ -38,7 +38,7 @@ library(here)
 #| code-line-numbers: false
 # Install `usethis` if you don't have it.
 install.packages('usethis')
-usethis::use_course('nzilbb/getting_started')
+usethis::use_course('nzilbb/getting_started_sessions')
 ```
 
 :::
