@@ -1,0 +1,223 @@
+---
+title: "R, Stats, and Open Science"
+subtitle: "Data processing and/in the tidyverse"
+author: "Joshua <span style='font-variant: small-caps;'>Wilson Black</span>"
+institute: "Te Kāhui Roro Reo | New Zealand Institute of Language, Brain and Behaviour <br/> Te Whare Wānanga o Waitaha | University of Canterbury"
+format:
+  revealjs:
+    theme: [custom.scss]
+    incremental: true
+    logo: "images/NZILBB-small.svg"
+    title-slide-attributes:
+      data-background-image: "images/NZILBB-big.svg"
+      data-background-position: 'top left'
+      data-background-size: 50%
+    embed-resources: false
+bibliography: 
+  - grateful-refs.bib
+editor: 
+  markdown: 
+    wrap: 72
+execute: 
+  echo: true
+---
+
+```{r}
+#| echo: false
+library(tidyverse)
+library(here)
+```
+
+---
+
+::: {.big .centre}
+
+```{r}
+#| eval: false
+#| code-overflow: wrap
+#| code-line-numbers: false
+# Install `usethis` if you don't have it.
+install.packages('usethis')
+usethis::use_course('nzilbb/getting_started')
+```
+
+:::
+
+
+
+## Overview
+
+1. What we covered last time
+2. What is Base R? What is the tidyverse?
+3. Basic data processing
+    - Filtering rows
+    - Selecting columns
+    - Adding and modifying columns
+
+## Last time
+
+- Install R and RStudio
+- Getting around RStudio
+- Basic arithmetic
+- Vectors and data frames
+- Functions and arguments
+- Installing and using packages
+
+## Packages
+
+- Packages (or 'libraries') contain code and data
+- Usually, we use packages for their **functions**
+- We load packages with the `library()` function.
+    
+::: fragment
+
+```{r}
+#| error: true
+library(this_package_aint_real)
+```
+
+:::
+
+- Install packages with `install.packages()` with the package name in quotes.
+- Usually packages come from CRAN, but sometimes from GitHub. 
+
+## Using a package
+
+::: fragment
+
+```{r}
+#| output-location: slide
+library(cowsay)
+say(what = "Hello, I'm a creature", by = "cat")
+```
+
+:::
+
+- This function  (`say`) has two named **arguments** (`what` and `by`).
+- Find out more: `?say`
+- The output of the function is:
+
+# Base R and the tidyverse
+
+## What is 'base R'?
+
+- Base R is just what comes with R 'out of the box'.
+- Benefits: universality
+
+## What is the tidyverse?
+
+- A set of packages for R which follow a similar philosophy.
+    - they are 'opinionated' tools.
+- These include: 
+    - `ggplot2` - for plotting
+    - `dplyr` - for data manipulation
+    - `tidyr` - for creating 'tidy' data
+- More about 'tidy' data in later sessions.
+- Best way to see the style is by example.
+
+## Interaction between base R and the tidyverse
+
+- A salient feature of tidyverse code: `%>%`
+    - the 'pipe' sends the output of one function as an input to another
+    function.
+    - Comes with the tidyverse package `magrittr`.
+- This was so popular, there is now a base R version: `|>`
+    - Introduced in R 4.1.0.
+- I use the base R version now.
+
+# Data processing with `dplyr`
+
+## Read in data
+
+```{r}
+vowels <- read_csv(here('data', 'qb_vowels.csv'))
+```
+
+
+## `mutate()` and `rename()`
+
+- `dplyr` uses a series of **verbs** which can solve most data processing problems.
+- `mutate()` allows you to create new columns and modify existing ones.
+- `rename()` changes the name of existing columns.
+
+::: fragment
+
+```{r}
+vowels <- vowels |> 
+  mutate(
+    word_freq_ln = log(word_freq + 1)
+  ) |> 
+  rename(
+    F1_midpoint = F1_50,
+    F2_midpoint = F2_50
+  )
+```
+
+:::
+
+## `filter()`
+
+- `filter()` allows you to select a subset of the rows of a data frame.
+
+::: fragment
+
+```{r}
+vowels_filtered <- vowels |> 
+  filter(
+    following_segment_category == "other",
+    !is.na(amplitude),
+    between(F1_midpoint, 300, 1000),
+    vowel_duration > 0.01 | word_freq < 1000
+  )
+```
+
+:::
+
+## Grouped data
+
+- The same verbs work with grouped and ungrouped data.
+
+::: fragment
+```{r}
+vowels_filtered <- vowels_filtered |> 
+  group_by(speaker) |> 
+  mutate(
+    mean_F1 = mean(F1_midpoint),
+    mean_amplitude = mean(amplitude)
+  ) |> 
+  ungroup()
+```
+:::
+
+## What to do now...
+
+- Work through the other examples in the online book
+
+::: fragment
+<https://nzilbb.github.io/statistics_workshops/data_processing.html>
+
+:::
+
+- You will:
+     - do some data processing in base R
+     - learn the basics of the `tidyverse` package `dplyr`.
+
+
+# Package references
+
+```{r}
+#| echo: false
+grateful::nocite_references(
+  grateful::cite_packages(
+    output = "citekeys", 
+    out.dir = here('slides', 'session_2'), 
+    errors="ignored",
+    omit="this_package_aint_real"
+  )
+)
+```
+
+
+::: {#refs .tiny}
+
+:::

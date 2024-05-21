@@ -1,0 +1,319 @@
+---
+title: "R, Stats, and Open Science"
+subtitle: "Intro and Getting Started"
+author: "Joshua <span style='font-variant: small-caps;'>Wilson Black</span>"
+institute: "Te Kāhui Roro Reo | New Zealand Institute of Language, Brain and Behaviour <br/> Te Whare Wānanga o Waitaha | University of Canterbury"
+format:
+  revealjs:
+    theme: [custom.scss]
+    incremental: true
+    logo: "images/NZILBB-small.svg"
+    title-slide-attributes:
+      data-background-image: "images/NZILBB-big.svg"
+      data-background-position: 'top left'
+      data-background-size: 50%
+    embed-resources: false
+bibliography: 
+  - grateful-refs.bib
+editor: 
+  markdown: 
+    wrap: 72
+execute: 
+  echo: true
+---
+
+```{r}
+#| echo: false
+library(tidyverse)
+library(here)
+```
+
+## Overview
+
+1. The Big Picture
+2. Getting Started with R
+
+    - R and R Studio
+    - Arithmetic
+    - Variables
+    - Packages
+
+# The Big Picture
+
+## {background-image="images/wherefrom.png" background-size="cover" background-opacity=0.6}
+
+
+::: {.r-stack}
+
+:::: {.fragment .fade-in-then-out .real-big .r-fit-text .centre .creepy .inverse-backlight}
+Spreadsheets
+
+::::
+
+:::: {.fragment .fade-in-then-out .real-big .r-fit-text .centre .creepy .inverse-backlight}
+Forgotten analysis steps
+
+::::
+
+:::: {.fragment .fade-in-then-out .real-big .r-fit-text .centre .creepy .inverse-backlight}
+No data sharing
+
+::::
+
+:::: {.fragment .fade-in-then-out .real-big .r-fit-text .centre .creepy .inverse-backlight}
+HARKing
+
+::::
+
+:::: {.fragment .fade-in-then-out .real-big .r-fit-text .centre .creepy .inverse-backlight}
+Forking paths
+
+::::
+
+:::: {.fragment .fade-in-then-out .real-big .r-fit-text .centre .creepy .inverse-backlight}
+Straight-up fraud!
+
+::::
+
+:::
+
+::: footer
+Hieronymus Bosch, _The Descent of Christ into Hell_, CC0, via Wikimedia Commons ([source](https://commons.wikimedia.org/wiki/File:Christ%27s_Descent_into_Hell_MET_DP-1207-001.jpg))
+:::
+
+## {background-image="images/whereto.png" background-size="cover" background-opacity=0.6}
+
+::::: {.r-stack}
+
+:::: {.fragment .fade-in-then-out .real-big .r-fit-text .centre .inverse-backlight}
+Step-by-step analysis
+
+::::
+
+:::: {.fragment .fade-in-then-out .real-big .r-fit-text .centre .inverse-backlight}
+Open data
+
+::::
+
+:::: {.fragment .fade-in-then-out .real-big .r-fit-text .centre .inverse-backlight}
+Reproducibility
+
+::::
+
+:::: {.fragment .fade-in-then-out .real-big .r-fit-text .centre .inverse-backlight}
+Preregistration
+
+::::
+
+:::: {.fragment .fade-in-then-out .real-big .r-fit-text .centre .inverse-backlight}
+Share additional analyses
+
+::::
+
+:::::
+
+::: footer
+Jan Brueghel the Elder, _Paradise_, Public domain, via Wikimedia Commons ([source](https://commons.wikimedia.org/wiki/File:Jan_Bruegel_d._%C3%84._003.jpg))
+:::
+
+
+## "Amatuer Software Development"
+
+- Science is (inter alia) "amatuer software development" (McElreath)
+- Software development has a bunch of tools for 'continuous integration'
+- We can take advantage of these!
+- Education is necessary and often not formal.
+
+::: footer
+
+Richard McElreath, "Science as Amateur Software Development", 
+<https://www.youtube.com/watch?v=8qzVV7eEiaI>
+
+:::
+
+## R
+
+- R is an open source programming language for data manipulation, statistics, and visualisation.
+- There are other programming languages:
+    - Python (esp. in NLP)
+    - Matlab (esp. in some phonetics)
+- Widely used in research.
+- The dream: step-by-step analyses which can run on anybody's computer.
+
+## Stats
+
+- R gives us access to lots of statistical methods.
+- We'd better learn both:
+    - how the methods work (maths bit),
+    - how to implement them in R (programming bit).
+- Usually we find a _package_.
+  
+## Open Science Infrastructure
+
+- Preregistration services
+    - <https://osf.io> and <https://aspredicted.org>
+- Use of Markdown ('literate programming')
+- Data and services
+- Code sharing. version control, and collaboration
+    - `git`, `github`, `gitlab`
+- Environment management
+
+---
+
+e.g.
+
+- <https://osf.io/m8nkh/>
+- <https://nzilbb.github.io/pronunciation-maori/maori_public.html>
+
+---
+
+![](images/prereg.png)
+
+- Functions as a sealed envelope. 
+
+## These sessions
+
+- Current structure:
+    - Short presentation
+    - One-on-one help
+    
+::: {.fragment}
+_This might not work!_
+:::
+
+::: {.fragment}
+Let me know if you have any suggestions.
+:::
+
+# Getting Started
+
+---
+
+::: {.r-stack}
+
+![](images/rstudio.png){.fragment .fade-in-then-out}
+
+![](images/rstudio-cpane.png){.fragment .fade-in-then-out}
+
+![](images/rstudio-epane.png){.fragment .fade-in-then-out}
+
+![](images/rstudio-opane.png){.fragment .fade-in-then-out}
+
+![](images/rstudio.png){.fragment .fade-in}
+
+:::: {.fragment .r-fit-text}
+Later: the [source pane]{.red}
+::::
+
+:::
+
+## Basic Arithmetic
+
+- Use R as a basic tool for arithmetic (enter in the console)
+
+::: fragment
+```{r}
+3 * (2 + 5)^2
+```
+:::
+
+- White space conventions
+
+    - `2        + 1` [❌❌❌]{.fragment}
+    - `2 + 1` [✅]{.fragment}
+    - `2+1` [🤨]{.fragment}
+    - `2^1` [✅]{.fragment}
+
+
+## Vectors and Variables
+
+- **Vectors** contain multiple **elements** of the same **type**. Create a vector using `c` ('combine')
+
+::: fragment
+```{r}
+c(1, 2, 3, 4)
+```
+
+:::
+
+- **Variables** allow us to associate a **name** with a **value**.
+
+::: fragment
+```{r}
+my_cool_vector <- c(6, 9, 4, 5, 2, 2)
+```
+
+:::
+
+- Use `<-` to create a variable.
+- Enter the variable name to see what its value is.
+- ... or look in the [environment pane]{.red}
+
+## Variables names
+
+- Variable names must:
+    - consist of letters, `.`, `_`, and numbers.
+    - cannot **start** with numbers or `_`.
+    - come from a list of special words. e.g.:
+    
+::: fragment    
+```{r}
+#| error: true
+function <- 5
+```
+
+:::
+
+- Matter of taste: prefer `_` over `.` to break up words.
+    - see: [Tidyverse style guide](https://style.tidyverse.org)
+
+
+## Variable names
+
+- **Anything** inside `` ` ``'s can be used as a variable name.
+
+::: fragment
+
+```{r}
+`👻` <- 5
+`👻`
+```
+
+:::
+
+- Don't abuse this.
+- This sometimes happens when loading data from spreadsheets.
+
+
+## What to do now...
+
+- Work through the other examples in the online book
+
+::: fragment
+<https://nzilbb.github.io/statistics_workshops/getting_started.html>
+
+:::
+
+- You will:
+     - start an R script,
+     - see some tabular data,
+     - download and install a package.
+
+
+# Package references
+
+```{r}
+#| echo: false
+grateful::nocite_references(
+  grateful::cite_packages(
+    output = "citekeys", 
+    out.dir = here(), 
+    errors="ignored"
+  )
+)
+```
+
+
+::: {#refs .tiny}
+
+:::
