@@ -44,6 +44,12 @@ usethis::use_course('nzilbb/getting_started_sessions')
 :::
 
 
+---
+
+<https://github.com/nzilbb/getting_started_sessions>
+
+![](images/download.png)
+
 
 ## Overview
 
