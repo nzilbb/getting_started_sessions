@@ -136,6 +136,7 @@ say(what = "Hello, I'm a creature", by = "cat")
 ## Read in data
 
 ```{r}
+#| warning: true
 vowels <- read_csv(here('data', 'qb_vowels.csv'))
 ```
 
